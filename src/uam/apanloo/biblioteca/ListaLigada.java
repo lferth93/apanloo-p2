@@ -1,8 +1,9 @@
 package uam.apanloo.biblioteca;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
-public class ListaLigada <T> implements Lista<T>,Iterable<T> {
+public class ListaLigada <T> implements Lista<T> {
 
     private Nodo primero;
     private Nodo ultimo;
@@ -102,8 +103,22 @@ public class ListaLigada <T> implements Lista<T>,Iterable<T> {
 
     @Override
     public Iterator<T> iterator() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'iterator'");
+        return new Iterator<T>() {
+            Nodo n = primero;
+            @Override
+            public boolean hasNext(){
+                return (n != null);
+            }
+
+            @Override
+            public T next() {
+                if (n == null)
+                    throw new  NoSuchElementException();
+                T element = n.elemento;
+                n = n.siguiente;
+                return element;
+            }
+        };
     }
 
     private class Nodo{
@@ -111,24 +126,4 @@ public class ListaLigada <T> implements Lista<T>,Iterable<T> {
         Nodo siguiente;
         Nodo anterior;
     }
-
-    public class Iterator<E> implements java.util.Iterator<E>{
-        private Nodo n;
-        private Iterator(Nodo n){
-            this.n = n;
-        }
-        @Override
-        public boolean hasNext() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'hasNext'");
-        }
-
-        @Override
-        public E next() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'next'");
-        }
-
-    }
-    
 }

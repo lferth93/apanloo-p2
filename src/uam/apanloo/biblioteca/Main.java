@@ -9,9 +9,18 @@ public class Main {
         System.out.println(l.consultar());
         System.out.println(l.consultar(0));
         System.out.println(l.tamanio());
+        System.out.println("Elementos de l:");
+        for(Integer i : l){
+            System.out.println(i);
+        }
+
         l.agregar(7,3);
         l.eliminar(1);
         System.out.println(l.consultar(3));
         System.out.println(l.tamanio());
+        System.out.println("Elementos de l:");
+        for(Integer i : l){
+            System.out.println(i);
+        }
     }
 }

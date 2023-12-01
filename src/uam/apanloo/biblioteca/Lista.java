@@ -2,7 +2,7 @@ package uam.apanloo.biblioteca;
 
 import java.util.Iterator;
 
-public interface Lista <T>{
+public interface Lista <T> extends Iterable<T>{
     void agregar(T e, int posicion);
     void agregar(T e);
     T eliminar();
