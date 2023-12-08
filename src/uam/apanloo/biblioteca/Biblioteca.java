@@ -1,6 +1,10 @@
 package uam.apanloo.biblioteca;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Biblioteca implements AlmacenLibro{
     Lista<Libro> libros;
@@ -34,31 +38,56 @@ public class Biblioteca implements AlmacenLibro{
 
     @Override
     public Libro eliminarLibro(String isbn) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'eliminarLibro'");
+        int i=0;
+        for(Libro l : libros){
+            if(l.getIsbn().equals(isbn))
+                break;
+        }
+        if(i < libros.tamanio())
+            return libros.eliminar(i);
+        return null;
     }
 
     @Override
     public void actualizarLibro(Libro l) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'actualizarLibro'");
+        int i=0;
+        for(Libro laux : libros){
+            if(l.getIsbn().equals(laux.getIsbn()))
+                break;
+        }
+        if(i < libros.tamanio())
+            libros.actualizar(i, l);
     }
 
     @Override
     public int contarLibros() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'contarLibros'");
+        return libros.tamanio();
     }
 
     @Override
     public int contarLibros(String buscar, String criterio) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'contarLibros'");
+        return buscarLibro(buscar, criterio).tamanio();
     }
 
     @Override
     public Libro[] ordenarLibro(String criterio) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'ordenarLibro'");
+        Libro[] array = new Libro[libros.tamanio()];
+        int i = 0;
+        for(Libro l: libros){
+            array[i] = l;
+        }
+        try {
+            Field f = Libro.class.getDeclaredField(criterio);
+            f.setAccessible(true);
+            Arrays.sort(array,new Comparator<Libro>() {
+                @Override
+                public int compare(Libro o1, Libro o2) {
+                    return f.get(o1).toString().compareTo(criterio);
+                }
+            });
+        } catch (NoSuchFieldException | SecurityException | IllegalAccessException | IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+        return array;
     }
 }

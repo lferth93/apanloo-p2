@@ -81,7 +81,17 @@ public class ListaLigada <T> implements Lista<T> {
 
             return n.elemento;
         }
-    return null;
+        return null;
+    }
+
+    @Override
+    public void actualizar(int posicion,T elemento){
+        if (tamanio > posicion){
+            Nodo n = primero;
+            for (int i = 0; i < posicion; i++)
+                n = n.siguiente; 
+            n.elemento = elemento;
+        }
     }
 
     @Override
