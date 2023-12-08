@@ -2,8 +2,6 @@ package uam.apanloo.biblioteca;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 
 public class Biblioteca implements AlmacenLibro{
@@ -75,19 +73,22 @@ public class Biblioteca implements AlmacenLibro{
         int i = 0;
         for(Libro l: libros){
             array[i] = l;
+            i++;
         }
-        try {
-            Field f = Libro.class.getDeclaredField(criterio);
-            f.setAccessible(true);
-            Arrays.sort(array,new Comparator<Libro>() {
-                @Override
-                public int compare(Libro o1, Libro o2) {
-                    return f.get(o1).toString().compareTo(criterio);
+            
+        Arrays.sort(array,new Comparator<Libro>() {
+            @Override
+            public int compare(Libro o1, Libro o2) {
+                try {
+                    Field f = Libro.class.getDeclaredField(criterio);
+                    f.setAccessible(true);
+                    return f.get(o1).toString().compareTo(f.get(o2).toString());
+                } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
+                    e.printStackTrace();
                 }
-            });
-        } catch (NoSuchFieldException | SecurityException | IllegalAccessException | IllegalArgumentException e) {
-            e.printStackTrace();
-        }
+                return 0;
+            }
+        });
         return array;
     }
 }

@@ -1,6 +1,6 @@
 package uam.apanloo.biblioteca;
 
-public class Libro implements Comparable<Libro>{
+public class Libro {
     String titulo;
     String autor;
     String isbn;
@@ -62,9 +62,5 @@ public class Libro implements Comparable<Libro>{
         sb.append("Autor: "+autor+"\n");
         sb.append("Fecha de publicacion: "+fechaPublicacion+"\n");
         return sb.toString();
-    }
-    @Override
-    public int compareTo(Libro o) {
-        return titulo.compareTo(o.titulo);
     }
 }
