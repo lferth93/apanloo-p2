@@ -22,5 +22,15 @@ public class Main {
         for(Integer i : l){
             System.out.println(i);
         }
+
+        ListaDesenrrollada<Integer> ul = new ListaDesenrrollada<>();
+        for(int i = 0; i < 10; i++)
+            ul.agregar(i);
+        System.out.println("Elementos de ul:");
+        for(Integer i : ul){
+            System.out.println(i);
+        }
+
+        System.out.println(ul.last);
     }
 }
