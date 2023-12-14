@@ -1,6 +1,5 @@
 package uam.apanloo.biblioteca;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Iterator;
 
@@ -25,10 +24,9 @@ public class ListaDesenrrollada<T> implements Lista<T>{
         if (last.size  == last.cap){
             Node nuevo = new Node(nodeCap);
             last.size = (last.cap+1)/2;
-            System.arraycopy(last.elements, last.size, nuevo.elements, 0, last.size);
+            System.arraycopy(last.elements, last.size, nuevo.elements, 0, last.elements.length-last.size);
             nuevo.size = nuevo.cap/2;
             last.next = nuevo;
-            nuevo.prev = last;
             last = nuevo;
         }
 
@@ -39,8 +37,16 @@ public class ListaDesenrrollada<T> implements Lista<T>{
 
     @Override
     public T eliminar() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'eliminar'");
+        if (last == null){
+            return null;
+        }
+        last.size--;
+        T element = last.elements[last.size];
+        if(last.size == 0){
+            last = last.prev;
+        }
+        size--; 
+        return element;
     }
 
     @Override
@@ -51,8 +57,10 @@ public class ListaDesenrrollada<T> implements Lista<T>{
 
     @Override
     public T consultar() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'consultar'");
+        if(last == null){
+            return null;
+        }
+        return last.elements[last.size-1];
     }
 
     @Override
@@ -69,24 +77,34 @@ public class ListaDesenrrollada<T> implements Lista<T>{
 
     @Override
     public int tamanio() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'tamanio'");
+        return size;
     }
 
     @Override
     public void limpiar() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'limpiar'");
+        first = null;
+        last = null;
+        size = 0;
     }
 
     @Override
     public boolean esVacia() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'esVacia'");
+        return size == 0;
+    }
+
+    private void addNode(){
+        if (first == null){
+            first = new Node(nodeCap);
+            last = first;
+        }else{
+            Node nuevo = new Node(nodeCap);
+            last.next = nuevo;
+            last = nuevo;
+        }
     }
 
     @Override
-    public Iterator iterator() {
+    public Iterator<T> iterator() {
         return new Iterator<T>() {
             Node n = first;
             int index = 0;
@@ -98,6 +116,10 @@ public class ListaDesenrrollada<T> implements Lista<T>{
 
             @Override
             public T next() {
+                if(!hasNext()){
+                    return null;
+                }
+
                 T e = n.elements[index];
                 index++;
                 if (index >= n.size){
@@ -125,7 +147,10 @@ public class ListaDesenrrollada<T> implements Lista<T>{
         }
 
         public String toString(){
-            return Arrays.toString(elements);
+            StringBuilder sb = new StringBuilder();
+            sb.append("{size:"+size+",");
+            sb.append(Arrays.toString(elements)+"}");
+            return sb.toString();
         }
     }
 }
