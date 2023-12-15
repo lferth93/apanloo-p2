@@ -26,11 +26,16 @@ public class Main {
         ListaDesenrrollada<Integer> ul = new ListaDesenrrollada<>();
         for(int i = 0; i < 10; i++)
             ul.agregar(i);
+        ul.eliminar(0);
         System.out.println("Elementos de ul:");
         for(Integer i : ul){
             System.out.println(i);
         }
-
-        System.out.println(ul.first);
+        ListaDesenrrollada<Integer>.Node n = ul.first;
+        while(n != null){
+            System.out.println(n);
+            n = n.next;
+        }
+        System.out.println(ul.consultar(0));
     }
 }

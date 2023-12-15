@@ -12,6 +12,7 @@ public class ListaDesenrrollada<T> implements Lista<T>{
     @Override
     public void agregar(T e, int posicion) {
         
+        size++;
     }
 
     @Override
@@ -51,8 +52,32 @@ public class ListaDesenrrollada<T> implements Lista<T>{
 
     @Override
     public T eliminar(int posicion) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'eliminar'");
+        if(posicion >= size){
+            return null;
+        }
+        Node n = first;
+        int acc = 0;
+        while (posicion >= acc + n.size){
+            acc += n.size;
+            n = n.next;
+        }
+        T element = n.elements[posicion - acc];
+        n.size--;
+        for(int i = posicion - acc; i < n.size; i++){
+            n.elements[i] = n.elements[i+1];
+        }
+        if(n.size == 0){
+            if(n.prev != null)
+                n.prev.next = n.next;
+            if(n.next != null)
+                n.next.prev = n.prev;
+            if(n == first){
+                first = null;
+                last = null;
+            }
+        }
+        size--;
+        return element;
     }
 
     @Override
@@ -65,14 +90,30 @@ public class ListaDesenrrollada<T> implements Lista<T>{
 
     @Override
     public T consultar(int posicion) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'consultar'");
+        if(posicion >= size){
+            return null;
+        }
+        Node n = first;
+        int acc = 0;
+        while (posicion >= acc + n.size){
+            acc += n.size;
+            n = n.next;
+        }
+        return n.elements[posicion-acc];
     }
 
     @Override
-    public void actualizar(int posicion, Object elemento) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'actualizar'");
+    public void actualizar(int posicion, T elemento) {
+        if(posicion >= size){
+            return ;
+        }
+        Node n = first;
+        int acc = 0;
+        while (posicion >= acc + n.size){
+            acc += n.size;
+            n = n.next;
+        }
+        n.elements[posicion - acc] = elemento;
     }
 
     @Override
@@ -132,7 +173,7 @@ public class ListaDesenrrollada<T> implements Lista<T>{
         };
     }
     
-    private class Node {
+    class Node {
         T[] elements;
         int size;
         int cap;
