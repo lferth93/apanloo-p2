@@ -165,17 +165,6 @@ public class ListaDesenrrollada<T> implements Lista<T>{
         return size == 0;
     }
 
-    private void addNode(){
-        if (first == null){
-            first = new Node(nodeCap);
-            last = first;
-        }else{
-            Node nuevo = new Node(nodeCap);
-            last.next = nuevo;
-            last = nuevo;
-        }
-    }
-
     @Override
     public Iterator<T> iterator() {
         return new Iterator<T>() {
