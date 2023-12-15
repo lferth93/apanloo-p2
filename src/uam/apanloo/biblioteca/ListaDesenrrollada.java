@@ -11,7 +11,39 @@ public class ListaDesenrrollada<T> implements Lista<T>{
 
     @Override
     public void agregar(T e, int posicion) {
-        
+        Node n;
+        int acc = 0;
+        n = first;
+        while(n != null && posicion >= acc + n.size){
+            acc += n.size;
+            n = n.next;
+        }
+        int index = posicion - acc;
+
+        if(posicion < size){
+            if(n.size == n.cap){
+                Node nuevo = new Node(n.cap);
+                nuevo.next = n.next;
+                if(n.next != null)
+                    n.next.prev = nuevo;
+                nuevo.prev = n;
+                n.next=nuevo;
+                n.size = (n.cap+1) / 2;
+                for(int i = 0; n.size + i < n.cap; i++){
+                    nuevo.elements[i] = n.elements[n.size + i];
+                }
+                nuevo.size = n.cap - n.size;
+                if(index >= n.size){
+                    index -= n.size;
+                    n = n.next;
+                }
+            }
+        }
+        for(int i= n.size;i > index; i--){
+            n.elements[i] = n.elements[i-1];
+        }
+        n.elements[index] = e;
+        n.size++;
         size++;
     }
 

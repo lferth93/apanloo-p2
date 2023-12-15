@@ -27,15 +27,17 @@ public class Main {
         for(int i = 0; i < 10; i++)
             ul.agregar(i);
         ul.eliminar(0);
-        System.out.println("Elementos de ul:");
-        for(Integer i : ul){
-            System.out.println(i);
-        }
+        ul.agregar(8,2);
+        ul.agregar(2,6);
+        ul.agregar(2,6);
         ListaDesenrrollada<Integer>.Node n = ul.first;
         while(n != null){
             System.out.println(n);
             n = n.next;
         }
-        System.out.println(ul.consultar(0));
+        System.out.println("Elementos de ul:");
+        for(Integer i : ul){
+            System.out.println(i);
+        }
     }
 }
